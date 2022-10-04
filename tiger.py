@@ -23,7 +23,17 @@ def to_nasm(string: str) -> str:
     return result
 
 source = """
-let var a : int := 1 in if a > 0 then printi(a) else printi(0) end
+let type intArray = array of int
+    var a := intArray[12] of 0
+    var b := intArray[12] of 7
+in (
+    a := b;
+    a[0] := 10;
+    printi(b[0]);
+    b[0] := 12;
+    printi(a[0])
+)
+end
 """
 lexer = Lexer(source)
 tokens = lexer.scanTokens()

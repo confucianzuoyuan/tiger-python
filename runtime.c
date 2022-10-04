@@ -3,7 +3,7 @@
 
 void printi(int num)
 {
-    printf("%d", num);
+    printf("%d\n", num);
 }
 
 int *initArray(int size, int init)
