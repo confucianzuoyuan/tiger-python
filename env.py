@@ -102,7 +102,7 @@ class Environment:
         functions['ord'] = ([StringType()], IntType())
         functions['chr'] = ([IntType()], StringType())
         functions['size'] = ([StringType()], IntType())
-        functions['substring'] = ([StringType(), IntType()], StringType())
+        functions['substring'] = ([StringType(), IntType(), IntType()], StringType())
         functions['concat'] = ([StringType(), StringType()], StringType())
         functions['not'] = ([IntType()], IntType())
         functions['exit'] = ([IntType()], UnitType())

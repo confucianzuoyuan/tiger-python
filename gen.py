@@ -73,6 +73,7 @@ def functionCall(label: Label, args: list[IrExp], parentLevel: Level, currentLev
                 functionLevel = functionLevel.parent
             else:
                 break
+        args.append(var)
     return IrCall(IrName(label), args)
 
 def num(number: int) -> IrExp:
@@ -179,15 +180,16 @@ def recordCreate(fields: list[IrExp]) -> IrExp:
     result = IrTemp(Temp())
     sequence = IrSequence(
         IrMove(result, externalCall('malloc', [IrConst(len(fields) * WORD_SIZE)])),
-        IrMove(result, fields[0])
+        IrMove(IrMem(result), fields[0])
     )
 
-    for i in range(1, len(fields)):
+    for (index, field) in enumerate(fields[1:]):
+        index = index + 1
         sequence = IrSequence(
             sequence,
             IrMove(
-                IrMem(IrBinOp(BinOp.Plus, result, IrConst((i + 1) * WORD_SIZE))),
-                fields[i]
+                IrMem(IrBinOp(BinOp.Plus, result, IrConst(index * WORD_SIZE))),
+                field
             )
         )
 

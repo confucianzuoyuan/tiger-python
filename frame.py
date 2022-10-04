@@ -159,6 +159,11 @@ class Level:
     current: Frame
     parent: Optional[Level]
 
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, Level):
+            return self.current == __o.current
+        return False
+
     def formals(self) -> list[LevelAccess]:
         return [(self, access) for access in self.current.frameFormals()]
 
