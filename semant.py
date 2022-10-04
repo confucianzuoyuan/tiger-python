@@ -5,7 +5,7 @@ from ir import IrExp, IrError, IrStatement, IrSequence, IrExpStatement, IrExpSeq
 from env import Entry, Environment, ErrorEntry, FunEntry, VarEntry
 from gen import Fragment, Gen, binaryOper, goto, ifExpression, num, stringEquality, varDec, relationalOper, recordCreate, varDecs, simpleVar, arraySubscript, unit, functionCall, whileLoop, fieldAccess
 from temp import Label, NamedLabel, NumLabel
-from frame import outermost, Label, Level, allocLocal, externalCall, newLevel
+from frame import outermost, Label, Level, alloc_local, externalCall, newLevel
 from symbol import Symbol
 from typing import Optional
 
@@ -369,7 +369,7 @@ class SemanticAnalyzer:
                 return None
             case AstVariableDeclaration(_, init, name, typ):
                 escape = self.env.lookEscape(name)
-                access = allocLocal(parentLevel, escape)
+                access = alloc_local(parentLevel, escape)
                 exp = self.transExp(init, parentLevel, doneLabel)
                 if isinstance(typ, Symbol):
                     typ_ = self.getType(typ, AddError())

@@ -1,5 +1,5 @@
 from ir import IrBinOp, IrMem, IrCondJump, IrConst, IrCall, IrExp, IrExpSequence, IrExpStatement, IrJump, IrLabel, IrName, IrMove, IrSequence, IrStatement, IrTemp, BinOp, RelationalOp
-from frame import WORD_SIZE, Label, Level, fp, allocLocal, LevelAccess, externalCall, Frame, returnValue
+from frame import WORD_SIZE, Label, Level, fp, alloc_local, LevelAccess, externalCall, Frame, returnValue
 from syntax import Operator
 from typing import Optional
 from temp import Label, NumLabel, Temp
@@ -79,7 +79,7 @@ def num(number: int) -> IrExp:
     return IrConst(number)
 
 def ifExpression(testExpr: IrExp, ifExpr: IrExp, elseExpr: Optional[IrExp], level: Level) -> IrExp:
-    result = allocLocal(level, False)
+    result = alloc_local(level, False)
     trueLabel = NumLabel()
     falseLabel = NumLabel()
     endLabel = NumLabel()
@@ -194,7 +194,7 @@ def recordCreate(fields: list[IrExp]) -> IrExp:
     return IrExpSequence(sequence, result)
 
 def relationalOper(op: Operator, left: IrExp, right: IrExp, level: Level) -> IrExp:
-    result = allocLocal(level, False)
+    result = alloc_local(level, False)
     trueLabel = NumLabel()
     falseLabel = NumLabel()
     endLabel = NumLabel()

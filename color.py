@@ -113,8 +113,11 @@ class RegisterAllocator:
             for successor in node.successors:
                 self.addEdge(temp, nodes[successor.index].element)
 
-        for node in self.precolored.keys():
-            self.degree[node] = 100000000
+        for node in self.precolored:
+            if node not in self.degree:
+                self.degree[node] = 1000000
+            else:
+                self.degree[node] = 0
 
     def coalesce(self) -> None:
         mov = self.worklistMoves.pop()
@@ -250,7 +253,9 @@ class RegisterAllocator:
 
     def makeWorkList(self, initial: list[Temp]) -> None:
         for n in initial:
-            degree = self.degree.get(n, 0)
+            if n not in self.degree:
+                self.degree[n] = 0
+            degree = self.degree[n]
             if degree >= self.registerCount:
                 self.spillWorkList.add(n)
             elif self.moveRelated(n):

@@ -72,9 +72,9 @@ def interferenceGraph(graph: FlowGraph) -> InterferenceGraph:
         
         if node.element.isMove:
             if len(node.element.defines) > 0:
-                define = node.element.defines.pop()
+                define = list(node.element.defines)[0]
                 if len(node.element.uses) > 0:
-                    use = node.element.uses.pop()
+                    use = list(node.element.uses)[0]
                     workListMoves.add((define, use))
 
                     for temp in (list(node.element.defines) + list(node.element.uses)):

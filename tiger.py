@@ -11,7 +11,7 @@ from color import alloc
 from escape import findEscapes
 
 source = """
-let var a : int := 1 in if a > 0 then a else 0 end
+let var a : int := 1 in if a > 0 then printi(a) else printi(0) end
 """
 lexer = Lexer(source)
 tokens = lexer.scanTokens()

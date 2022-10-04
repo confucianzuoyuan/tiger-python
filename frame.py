@@ -29,6 +29,12 @@ class Frame:
         self.pointer = 0
         self.formals = [self.allocLocal(i) for i in formals]
 
+    def __str__(self) -> str:
+        return 'name=' + str(self.name) + ', pointer=' + str(self.pointer) + ', formals=' + str(self.formals)
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
     def allocLocal(self, escape: bool) -> Access:
         if escape:
             self.pointer -= POINTER_SIZE
@@ -162,7 +168,7 @@ def outermost() -> Level:
 def newLevel(parent: Level, name: Label, formals: list[bool]) -> Level:
     return Level(Frame(name, formals + [True]), parent)
 
-def allocLocal(level: Level, escape: bool) -> LevelAccess:
+def alloc_local(level: Level, escape: bool) -> LevelAccess:
     frameLocal = level.current.allocLocal(escape)
     return (level, frameLocal)
 
