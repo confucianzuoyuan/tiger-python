@@ -10,6 +10,18 @@ from frame import procEntryExit2
 from color import alloc
 from escape import findEscapes
 
+def to_nasm(string: str) -> str:
+    result = "'"
+    for c in string:
+        if c == '\n':
+            result += "', 10, '"
+        elif c == '\t':
+            result += "', 9, '"
+        else:
+            result += c
+    result += "'"
+    return result
+
 source = """
 let var a : int := 1 in if a > 0 then printi(a) else printi(0) end
 """
@@ -34,7 +46,7 @@ print("    align 2")
 for fragment in fragments:
     match fragment:
         case StrFragment(label, string):
-            print("    {}: db {}, 0".format(label, string))
+            print("    {}: db {}, 0".format(label, to_nasm(string)))
         case _:
             pass
 
